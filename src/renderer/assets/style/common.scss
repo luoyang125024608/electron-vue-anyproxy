@@ -1,0 +1,601 @@
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {
+  margin: 0;
+  padding: 0
+}
+
+body, button, input, select, textarea {
+  font: 14px/1 "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Georgia, tahoma, arial, simsun, "宋体";
+  color: #333;
+  -ms-overflow-style: scrollbar;
+  word-break: break-all
+}
+
+button, input, select, textarea {
+  font-size: 100%
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  outline: 0;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0
+}
+
+fieldset, img, area, a {
+  border: 0;
+  outline: 0
+}
+
+img {
+  display: block;
+}
+
+address, caption, cite, code, dfn, em, th, var, i {
+  font-style: normal;
+  font-weight: normal
+}
+
+code, kbd, pre, samp {
+  font-family: courier new, courier, monospace
+}
+
+ol, ul {
+  list-style: none
+}
+
+body {
+  background: #fff;
+  -webkit-text-size-adjust: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+small {
+  font-size: 12px
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 100%
+}
+
+sup {
+  vertical-align: text-top;
+}
+
+sub {
+  vertical-align: text-bottom
+}
+
+legend {
+  color: #000
+}
+
+a, input {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+input, textarea, button, select {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border-radius: 0;
+  outline: none;
+}
+
+div {
+  -webkit-overflow-scrolling: touch;
+}
+
+/****************flexbox**************/
+.flex {
+  display: flex;
+}
+
+.inline-flex {
+  display: inline-flex;
+}
+
+.flex-center {
+  justify-content: center;
+  align-items: center;
+}
+
+/*横向或纵向*/
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-row-reverse {
+  flex-direction: row-reverse;
+}
+
+.flex-col-reverse {
+  flex-direction: column-reverse;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+/*主轴对齐方式*/
+.flex-justify-start {
+  justify-content: flex-start;
+}
+
+.flex-justify-end {
+  justify-content: flex-end;
+}
+
+.flex-justify-center {
+  justify-content: center;
+}
+
+.flex-justify-between {
+  justify-content: space-between;
+}
+
+.flex-justify-around {
+  justify-content: space-around;
+}
+
+/*侧轴对齐方式*/
+.flex-align-start {
+  align-items: flex-start;
+}
+
+.flex-align-end {
+  align-items: flex-end;
+}
+
+.flex-align-center {
+  align-items: center;
+}
+
+.flex-align-baseline {
+  align-items: baseline;
+}
+
+.flex-align-stretch {
+  align-items: stretch;
+}
+
+/*主轴换行时行在侧轴的对齐方式，必须定义flex-wrap为换行*/
+.flex-content-start {
+  align-content: flex-start;
+}
+
+.flex-content-end {
+  align-content: flex-end;
+}
+
+.flex-content-center {
+  align-content: center;
+}
+
+.flex-content-between {
+  align-content: space-between;
+}
+
+.flex-content-around {
+  align-content: space-around;
+}
+
+.flex-content-stretch {
+  align-content: stretch;
+}
+
+/*允许子元素收缩*/
+.flex-child-grow {
+  flex-grow: 1;
+}
+
+/*允许拉伸*/
+.flex-child-shrink {
+  flex-shrink: 1;
+}
+
+/*允许收缩*/
+.flex-child-noshrink {
+  flex-shrink: 0;
+}
+
+/*不允许收缩*/
+.flex-child-average {
+  flex: 1;
+}
+
+/*平均分布，兼容旧版必须给宽度*/
+.flex-child-first {
+  order: 1;
+}
+
+/*排第一个*/
+/*子元素在侧轴的对齐方式*/
+.flex-child-align-start {
+  align-self: flex-start;
+}
+
+.flex-child-align-end {
+  align-self: flex-end;
+}
+
+.flex-child-align-center {
+  align-self: center;
+}
+
+.flex-child-align-baseline {
+  align-self: baseline;
+}
+
+.flex-child-align-stretch {
+  align-self: stretch;
+}
+
+.text-ellipsis {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+}
+
+.block {
+  display: block;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.inline {
+  display: inline;
+}
+
+.hide {
+  display: none;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.clear {
+  clear: both;
+}
+
+.overflow-hide {
+  overflow: hidden;
+}
+
+.normal {
+  font-weight: normal;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.font-30 {
+  font-size: 30px;
+}
+
+.font-24 {
+  font-size: 24px;
+}
+
+.font-22 {
+  font-size: 22px;
+}
+
+.font-20 {
+  font-size: 20px;
+}
+
+.font-18 {
+  font-size: 18px;
+}
+
+.font-17 {
+  font-size: 17px;
+}
+
+.font-16 {
+  font-size: 16px;
+}
+
+.font-15 {
+  font-size: 15px;
+}
+
+.font-14 {
+  font-size: 14px;
+}
+
+.font-13 {
+  font-size: 13px;
+}
+
+.font-12 {
+  font-size: 12px;
+}
+
+.font-10 {
+  font-size: 10px;
+}
+
+.border-box {
+  box-sizing: border-box;
+}
+
+.margin {
+  margin: 10px;
+}
+
+.margin-top {
+  margin-top: 10px;
+}
+
+.margin-right {
+  margin-right: 10px;
+}
+
+.margin-bottom {
+  margin-bottom: 10px;
+}
+
+.margin-left {
+  margin-left: 10px;
+}
+
+.mt-5 {
+  margin-top: 5px;
+}
+
+.mr-5 {
+  margin-right: 5px;
+}
+
+.mb-5 {
+  margin-bottom: 5px;
+}
+
+.ml-5 {
+  margin-left: 5px;
+}
+
+.padding {
+  padding: 10px;
+}
+
+.padding-top {
+  padding-top: 10px;
+}
+
+.padding-right {
+  padding-right: 10px;
+}
+
+.padding-bottom {
+  padding-bottom: 10px;
+}
+
+.padding-left {
+  padding-left: 10px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.assist-color, a.assist-color {
+  color: #78b
+}
+
+/*辅助色*/
+.assist-bgcolor {
+  background-color: #78b;
+}
+
+.black, a.black {
+  color: #333;
+}
+
+.black-bg {
+  background-color: #333;
+}
+
+.grey, a.grey {
+  color: #505050;
+}
+
+.grey-bg {
+  background-color: #505050;
+}
+
+.grey-6, a.grey-6 {
+  color: #6b6b6b;
+}
+
+.grey-6-bg {
+  background-color: #6b6b6b;
+}
+
+.grey-9, a.grey-9 {
+  color: #9c9c9c;
+}
+
+.grey-9-bg {
+  background-color: #9c9c9c;
+}
+
+.grey-d, a.grey-d {
+  color: #dfdfdf;
+}
+
+.grey-d-bg {
+  background-color: #dfdfdf;
+}
+
+.grey-e, a.grey-e {
+  color: #efefef;
+}
+
+.grey-e-bg {
+  background-color: #efefef;
+}
+
+.grey-f, a.grey-f {
+  color: #f5f5f5;
+}
+
+.grey-f-bg {
+  background-color: #f5f5f5;
+}
+
+.white, a.white {
+  color: #fff;
+}
+
+.white-bg {
+  background-color: #fff;
+}
+
+.red, a.red {
+  color: #c80f1e;
+}
+
+.red-bg {
+  background-color: #c80f1e;
+}
+
+.light-red, a.light-red {
+  color: #ff5050;
+}
+
+.light-red-bg {
+  background-color: #ff5050;
+}
+
+.orange-red, a.orange-red {
+  color: #ff4e00;
+}
+
+.orange-red-bg {
+  background-color: #ff4e00;
+}
+
+.orange, a.orange {
+  color: #ff6700;
+}
+
+.orange-bg {
+  background-color: #ff6700;
+}
+
+.orange-yellow, a.orange-yellow {
+  color: #fd9712;
+}
+
+.orange-yellow-bg {
+  background-color: #fd9712;
+}
+
+.yellow, a.yellow {
+  color: #fbcb30;
+}
+
+.yellow-bg {
+  background-color: #fbcb30;
+}
+
+.green, a.green {
+  color: #5dc800;
+}
+
+.green-bg {
+  background-color: #5dc800;
+}
+
+.light-green, a.light-green {
+  color: #8fd14c;
+}
+
+.light-green-bg {
+  background-color: #8fd14c;
+}
+
+.blue, a.blue {
+  color: #3caaff;
+}
+
+.blue-bg {
+  background-color: #3caaff;
+}
+
+.light-blue, a.light-blue {
+  color: #78b;
+}
+
+.light-blue-bg {
+  background-color: #78b;
+}
+
+.purple, a.purple {
+  color: #a776d9;
+}
+
+.purple-bg {
+  background-color: #a776d9;
+}
+
+.light-purple, a.light-purple {
+  color: #b394f3;
+}
+
+.light-purple-bg {
+  background-color: #b394f3;
+}
+
+.pink, a.pink {
+  color: #fb5c9b;
+}
+
+.pink-bg {
+  background-color: #fb5c9b;
+}
