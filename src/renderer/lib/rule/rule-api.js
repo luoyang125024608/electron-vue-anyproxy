@@ -2,15 +2,17 @@
  * Created by luoyang on 2019-02-11
  */
 const path = require('path')
-const { app } = require('electron').remote
 const fs = require('fs')
 
 class RuleApi {
   constructor () {
-    this.userDataDir = app.getPath('userData')
     this.ruleFile = this.userDataDir + '/rules.json'
     this.ruleCustomPath = this.userDataDir + '/rule_custom'
     this.ruleSamplePath = path.join(__static, '/rule_sample')
+  }
+
+  get userDataDir () {
+    return (require('electron').remote || require('electron')).app.getPath('userData')
   }
 
   fetchSampleRule (rulename) {
@@ -29,6 +31,39 @@ class RuleApi {
         reject(new Error())
       }
     })
+  }
+
+  saveRulesIntoFile (rules) {
+    return new Promise((resolve, reject) => {
+      fs.writeFile(this.ruleFile, JSON.stringify(rules), 'utf8', (err) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve()
+        }
+      })
+    })
+  }
+
+  saveCustomRuleToFile (id, rule) {
+    const filename = 'custom_' + id + '.js'
+    if (!fs.existsSync(this.ruleCustomPath)) {
+      fs.mkdirSync(this.ruleCustomPath)
+    }
+
+    const rulepath = path.resolve(this.ruleCustomPath, filename)
+
+    fs.writeFile(rulepath, rule, 'utf8', (err) => {
+      if (err) throw err
+    })
+  }
+
+  readRulesFromFile () {
+    if (fs.existsSync(this.ruleFile)) {
+      return fs.readFileSync(this.ruleFile, 'utf8') || '[]'
+    } else {
+      return '[]'
+    }
   }
 }
 
