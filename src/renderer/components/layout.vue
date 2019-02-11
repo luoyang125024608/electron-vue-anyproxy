@@ -13,8 +13,10 @@
           </router-link>
         </a-menu-item>
         <a-menu-item key="2">
-          <a-icon type="desktop"></a-icon>
-          <span>拦截修改</span>
+          <router-link to="/rule/list">
+            <a-icon type="desktop"></a-icon>
+            <span>拦截修改</span>
+          </router-link>
         </a-menu-item>
         <a-menu-item key="9">
           <router-link to="/setting">

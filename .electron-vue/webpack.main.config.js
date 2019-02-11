@@ -31,7 +31,7 @@ let mainConfig = {
       {
         test: /\.js$/,
         use: 'babel-loader',
-        exclude: /node_modules|src\/main\/proxy\/anyproxy/
+        exclude: /node_modules/
       },
       {
         test: /\.node$/,

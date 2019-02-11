@@ -1,7 +1,7 @@
 'use strict'
 
 import { app, BrowserWindow } from 'electron'
-import { mainParams } from './const'
+import { mainParams, clearCache } from './const'
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -35,6 +35,7 @@ app.on('ready', () => {
 })
 
 app.on('window-all-closed', () => {
+  clearCache()
   if (process.platform !== 'darwin') {
     app.quit()
   }
