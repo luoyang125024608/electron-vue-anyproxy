@@ -18,7 +18,7 @@ module.exports = {
       return requestDetail;
     }
   },
-  *beforeDealHttpsRequest(requestDetail) {
-    return true;
-  }
+  // *beforeDealHttpsRequest(requestDetail) {
+  //   return true;
+  // }
 };

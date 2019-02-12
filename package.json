@@ -58,6 +58,7 @@
     "global-proxy": "0.0.3",
     "highlight.js": "^9.14.2",
     "lodash": "^4.17.11",
+    "node-require-function": "^1.2.0",
     "vue": "^2.5.16",
     "vue-codemirror": "^4.0.6",
     "vue-electron": "^1.0.6",
@@ -68,7 +69,6 @@
     "vuex-electron": "^1.0.0"
   },
   "devDependencies": {
-    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "ajv": "^6.5.0",
     "ant-design-vue": "^1.3.4",
     "babel-core": "^6.26.3",

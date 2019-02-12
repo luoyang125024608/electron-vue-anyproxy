@@ -41,12 +41,12 @@
     methods: {
       globalChange (bool) {
         if (bool) {
-          globalProxy.enable('127.0.0.1', 9000, 'http').then((stdout) => {
+          globalProxy.enable('127.0.0.1', 8001, 'http').then((stdout) => {
             console.log(stdout)
           }).catch((error) => {
             console.log(error)
           })
-          globalProxy.enable('127.0.0.1', 9000, 'https').then((stdout) => {
+          globalProxy.enable('127.0.0.1', 8001, 'https').then((stdout) => {
             console.log(stdout)
           }).catch((error) => {
             console.log(error)

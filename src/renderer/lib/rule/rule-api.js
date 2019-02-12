@@ -3,6 +3,8 @@
  */
 const path = require('path')
 const fs = require('fs')
+const nodeRequire = require('node-require-function')()
+const co = require('co')
 
 class RuleApi {
   constructor () {
@@ -34,28 +36,17 @@ class RuleApi {
   }
 
   saveRulesIntoFile (rules) {
-    return new Promise((resolve, reject) => {
-      fs.writeFile(this.ruleFile, JSON.stringify(rules), 'utf8', (err) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve()
-        }
-      })
-    })
+    fs.writeFileSync(this.ruleFile, JSON.stringify(rules), 'utf8')
   }
 
   saveCustomRuleToFile (id, rule) {
-    const filename = 'custom_' + id + '.js'
     if (!fs.existsSync(this.ruleCustomPath)) {
       fs.mkdirSync(this.ruleCustomPath)
     }
 
-    const rulepath = path.resolve(this.ruleCustomPath, filename)
+    const rulepath = path.resolve(this.ruleCustomPath, this.getCustomFileName(id))
 
-    fs.writeFile(rulepath, rule, 'utf8', (err) => {
-      if (err) throw err
-    })
+    fs.writeFileSync(rulepath, rule, 'utf8')
   }
 
   readRulesFromFile () {
@@ -64,6 +55,71 @@ class RuleApi {
     } else {
       return '[]'
     }
+  }
+
+  fetchCustomRule (id) {
+    const rulepath = path.resolve(this.ruleCustomPath, this.getCustomFileName(id))
+    return new Promise((resolve, reject) => {
+      if (fs.existsSync(rulepath)) {
+        fs.readFile(rulepath, (err, data) => {
+          if (err) {
+            reject(err)
+          } else {
+            resolve(data.toString())
+          }
+        })
+      } else {
+        reject(new Error())
+      }
+    })
+  }
+
+  deleteCustomRuleFile (id) {
+    const rulepath = path.resolve(this.ruleCustomPath, this.getCustomFileName(id))
+    if (fs.existsSync(rulepath)) {
+      fs.unlink(rulepath, (err) => {
+        if (err) throw err
+      })
+    }
+  }
+
+  // require rule文件
+  requireRuleModule (id) {
+    if (!id) return {}
+    const filepath = path.resolve(this.ruleCustomPath, this.getCustomFileName(id))
+    if (fs.existsSync(filepath)) {
+      return nodeRequire(filepath)
+    } else {
+      return {}
+    }
+  }
+
+  mergeRuleModule (ids) {
+    let rules = ids.map(id => this.requireRuleModule(id))
+    // var rule = this.requireRuleModule(ids[0])
+    return {
+      summary: '',
+      beforeSendRequest: function * (requestDetail) {
+        co(function * () {
+          var result = yield rules.filter(rule => rule.beforeSendRequest).map(rule => rule.beforeSendRequest(requestDetail))
+          return result.reduce(function (request, res) {
+            return Object.assign(request, res || {})
+          }, requestDetail)
+        })
+      },
+      beforeSendResponse: function * (requestDetail, responseDetail) {
+        co(function * () {
+          var result = yield rules.filter(rule => rule.beforeSendResponse).map(rule => rule.beforeSendResponse(requestDetail, responseDetail))
+          return result.reduce(function (response, res) {
+            return Object.assign(response, res || {})
+          }, responseDetail)
+        })
+      }
+    }
+  }
+
+  getCustomFileName (id) {
+    return 'custom_' + id + '.js'
   }
 }
 

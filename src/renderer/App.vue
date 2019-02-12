@@ -8,6 +8,7 @@
 <script>
   import layout from './components/layout'
   import headerMenu from './components/header-menu'
+
   export default {
     components: { layout, headerMenu },
     name: 'http-toolkit'

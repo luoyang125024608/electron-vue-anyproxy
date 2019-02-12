@@ -5,10 +5,10 @@
 <template>
   <div>
     <a-form>
-      <a-form-item v-bind="formItemLayout"
+      <a-form-item v-if="mode === 'add'" v-bind="formItemLayout"
                    label="规则示例"
       >
-        <a-select style="width: 200px" @change="ruleSelectChange">
+        <a-select style="width: 200px" @change="sampleSelectChange">
           <a-select-option :value="item.value" v-for="(item, index) in ruleOptions" :key="index">{{item.label}}
           </a-select-option>
         </a-select>
@@ -66,6 +66,7 @@
       return {
         ruleKey: { // 样例的id和name列表
           id: '',
+          enable: false,
           name: ''
         },
         ruleName: '', // 样例规则的名称
@@ -79,15 +80,17 @@
         editorOption: {
           mode: 'text/javascript',
           lineNumbers: true,
-          theme: 'monokai'
+          theme: 'monokai',
+          cursorHeight: 0.85
         }
       }
     },
     methods: {
-      ruleSelectChange (value) {
+      sampleSelectChange (value) {
         ruleApi.fetchSampleRule(value).then((data) => {
           this.ruleKey = {
             id: generateUUIDv4(),
+            enable: false,
             name: this.ruleOptions[_.findIndex(this.ruleOptions, ['value', value])]['label']
           }
           this.ruleValue = data
@@ -95,10 +98,7 @@
         })
       },
       async saveRule () {
-        const rule = {
-          id: this.ruleKey.id || generateUUIDv4(),
-          name: this.ruleKey.name
-        }
+        const rule = JSON.parse(JSON.stringify(this.ruleKey))
         if (!rule.name || !this.ruleValue) {
           this.$error({
             title: '错误',
@@ -114,7 +114,10 @@
             rule: rule
           })
           await this.saveToFile(rule.id)
-          this.$success('保存成功')
+          this.$success({
+            title: '提示',
+            content: '保存成功'
+          })
           this.$router.back()
         } else {
           if (nameIndex !== -1) {
@@ -140,6 +143,12 @@
     },
     created () {
       this.mode = this.$route.path.indexOf('/rule/add') + 1 ? 'add' : 'edit'
+      if (this.mode === 'edit') {
+        ruleApi.fetchCustomRule(this.$route.params.id).then((data) => {
+          this.ruleValue = data
+        })
+        this.ruleKey = JSON.parse(JSON.stringify(this.rulesData.filter(rule => rule.id === this.$route.params.id)[0]))
+      }
     },
     computed: {
       ...mapState({

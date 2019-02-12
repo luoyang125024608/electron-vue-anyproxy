@@ -2,6 +2,8 @@
  * Created by luoyang on 2019-02-08
  */
 
+import ruleApi from '../rule/rule-api'
+
 const AnyProxy = require('anyproxy')
 
 class ProxyApi {
@@ -9,19 +11,22 @@ class ProxyApi {
     this.proxyServer = null
     this.options = {
       port: 8001,
-      // rule: require('myRuleModule'),
+      // rule: require('/Users/luoyang/Library/Application Support/Electron/rule_custom/custom_1c9ec7bc-f809-438c-a045-11dd87f95cee.js'),
       webInterface: {
         enable: true,
         webPort: 8002
       },
-      throttle: 10000,
+      // throttle: 10000,
       forceProxyHttps: true,
       wsIntercept: false, // 不开启websocket代理
       silent: false
     }
   }
 
-  init () {
+  init (ruleIds) {
+    if (ruleIds && ruleIds.length) {
+      this.options.rule = ruleApi.mergeRuleModule(ruleIds)
+    }
     this.proxyServer = new AnyProxy.ProxyServer(this.options)
   }
 
@@ -35,9 +40,9 @@ class ProxyApi {
     this.proxyServer.start()
   }
 
-  stop () {
-    this.proxyServer.off('update')
-    this.proxyServer.stop()
+  close () {
+    // this.proxyServer.off('update')
+    this.proxyServer.close()
   }
 
   fetchBody (id) {

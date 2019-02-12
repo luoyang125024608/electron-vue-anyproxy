@@ -3,6 +3,7 @@
 import { app, BrowserWindow } from 'electron'
 import { mainParams, clearCache } from './const'
 import '../renderer/store'
+import proxyApi from '../renderer/lib/proxy/proxy-api'
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -24,7 +25,6 @@ function createWindow () {
   mainWindow.loadURL(winURL)
 
   mainWindow.webContents.on('did-finish-load', () => {
-
   })
   mainWindow.on('closed', () => {
     mainWindow = null
@@ -36,6 +36,7 @@ app.on('ready', () => {
 })
 
 app.on('window-all-closed', () => {
+  proxyApi.close()
   clearCache()
   if (process.platform !== 'darwin') {
     app.quit()
