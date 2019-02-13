@@ -3,7 +3,9 @@
  */
 
 import ruleApi from '../rule/rule-api'
+
 const AnyProxy = require('anyproxy')
+const certMgr = require('anyproxy').utils.certMgr
 
 class ProxyApi {
   constructor () {
@@ -16,13 +18,19 @@ class ProxyApi {
         webPort: 8002
       },
       // throttle: 10000,
-      forceProxyHttps: true,
+      forceProxyHttps: false,
       wsIntercept: false, // 不开启websocket代理
       silent: false
     }
   }
 
+  get CAFileExists () {
+    return certMgr.ifRootCAFileExists()
+  }
+
   init (ruleIds) {
+    this.options.forceProxyHttps = this.CAFileExists
+    console.log(this.options.forceProxyHttps)
     if (ruleIds && ruleIds.length) {
       this.options.rule = ruleApi.mergeRuleModule(ruleIds)
     }

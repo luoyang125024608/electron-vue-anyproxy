@@ -5,6 +5,7 @@ import store from './store'
 import './assets/style/common.scss'
 import { Button, message, notification, Modal } from 'ant-design-vue'
 import bus from './lib/bus'
+import axios from 'axios'
 
 Vue.use(Button)
 Vue.prototype.$message = message
@@ -15,6 +16,9 @@ Vue.prototype.$error = Modal.error
 Vue.prototype.$warning = Modal.warning
 Vue.prototype.$confirm = Modal.confirm
 Vue.prototype.$bus = bus
+Vue.prototype.$axios = axios.create({
+  baseURL: 'http://127.0.0.1:8002'
+})
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.config.productionTip = false
 /* eslint-disable no-new */
