@@ -5,6 +5,7 @@ const path = require('path')
 const fs = require('fs')
 const nodeRequire = require('node-require-function')()
 const co = require('co')
+const { app } = require('electron').remote
 
 class RuleApi {
   constructor () {
@@ -14,7 +15,7 @@ class RuleApi {
   }
 
   get userDataDir () {
-    return (require('electron').remote || require('electron')).app.getPath('userData')
+    return app.getPath('userData')
   }
 
   fetchSampleRule (rulename) {

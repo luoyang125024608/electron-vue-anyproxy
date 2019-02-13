@@ -20,7 +20,7 @@
 
 <script>
   import { Form, Switch } from 'ant-design-vue'
-  import globalProxy from '@/lib/global-proxy'
+  import localProxy from '../lib/global-proxy/local-proxy.js'
 
   export default {
     components: {
@@ -41,27 +41,9 @@
     methods: {
       globalChange (bool) {
         if (bool) {
-          globalProxy.enable('127.0.0.1', 8001, 'http').then((stdout) => {
-            console.log(stdout)
-          }).catch((error) => {
-            console.log(error)
-          })
-          globalProxy.enable('127.0.0.1', 8001, 'https').then((stdout) => {
-            console.log(stdout)
-          }).catch((error) => {
-            console.log(error)
-          })
+          localProxy.enable()
         } else {
-          globalProxy.disable('http').then((stdout) => {
-            console.log(stdout)
-          }).catch((error) => {
-            console.log(error)
-          })
-          globalProxy.disable('https').then((stdout) => {
-            console.log(stdout)
-          }).catch((error) => {
-            console.log(error)
-          })
+          localProxy.disable()
         }
       }
     },

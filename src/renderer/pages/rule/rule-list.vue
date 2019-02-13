@@ -67,8 +67,9 @@
           }
         })
       },
-      use (id) {
-        this.$store.dispatch('TOGGLE_ENABLE_RULE', id)
+      async use (id) {
+        await this.$store.dispatch('TOGGLE_ENABLE_RULE', id)
+        this.$bus.$emit('proxyReload')
       }
     },
     computed: {

@@ -1,9 +1,8 @@
 'use strict'
 
 import { app, BrowserWindow } from 'electron'
-import { mainParams, clearCache } from './const'
-import '../renderer/store'
-import proxyApi from '../renderer/lib/proxy/proxy-api'
+import { mainParams } from './const'
+import localProxy from '../renderer/lib/global-proxy/local-proxy.js'
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -36,8 +35,7 @@ app.on('ready', () => {
 })
 
 app.on('window-all-closed', () => {
-  proxyApi.close()
-  clearCache()
+  localProxy.disable()
   if (process.platform !== 'darwin') {
     app.quit()
   }

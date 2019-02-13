@@ -3,7 +3,6 @@
  */
 
 import ruleApi from '../rule/rule-api'
-
 const AnyProxy = require('anyproxy')
 
 class ProxyApi {
@@ -31,7 +30,6 @@ class ProxyApi {
   }
 
   start (onUpdate) {
-    this.proxyServer.once('ready', function () { console.log('启动完成') })
     if (onUpdate) {
       this.proxyServer.recorder.on('update', (data) => {
         onUpdate(data)

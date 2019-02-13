@@ -1,7 +1,9 @@
 <template>
   <layout id="app">
     <header-menu slot="header"></header-menu>
-    <router-view slot="content"></router-view>
+    <keep-alive slot="content">
+      <router-view></router-view>
+    </keep-alive>
   </layout>
 </template>
 

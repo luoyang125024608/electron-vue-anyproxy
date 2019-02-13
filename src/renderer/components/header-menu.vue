@@ -3,7 +3,15 @@
 
 <template>
   <div class="flex flex-align-center full-height">
-    <a-button type="primary" icon="play-circle" @click="proxyStart()">启动</a-button>
+    <a-button v-if="proxyStatus==='off'" type="primary" icon="play-circle"
+              @click="proxyStart()"
+    >
+      启动
+    </a-button>
+    <a-button v-if="proxyStatus==='on'" @click="proxyClose()"
+              type="danger" icon="poweroff"
+    >停止
+    </a-button>
   </div>
 </template>
 
@@ -15,10 +23,15 @@
     components: {},
     name: 'header-menu',
     data () {
-      return {}
+      return {
+        proxyStatus: 'off'
+      }
     },
     created () {
       this.proxyInit()
+      this.$bus.$on('proxyReload', () => {
+        this.proxyReload()
+      })
     },
     methods: {
       async proxyInit () {
@@ -27,10 +40,31 @@
         proxyApi.init(ruleIds)
       },
       proxyStart () {
+        proxyApi.proxyServer.once('ready', () => {
+          this.proxyStatus = 'on'
+          console.log('启动完成')
+        })
         proxyApi.start((item) => {
           this.$bus.$emit('updateList', item)
         })
+      },
+      proxyClose () {
+        this.proxyStatus = 'off'
+        proxyApi.close()
+      },
+      async proxyReload () {
+        let cacheStatus = this.proxyStatus
+        if (cacheStatus === 'on') {
+          this.proxyClose()
+        }
+        await this.proxyInit()
+        if (cacheStatus === 'on') {
+          this.proxyStart()
+        }
       }
+    },
+    beforeDestroy () {
+      this.proxyClose()
     },
     computed: {
       ...mapState({

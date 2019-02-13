@@ -1,23 +1,45 @@
-<style scoped lang="scss">
-
+<style scoped lang="less">
+  @import "../assets/style/network.less";
 </style>
 
 <template>
   <div>
-    <a-table :columns="columns"
-             :dataSource="list"
-             :pagination="{ pageSize: 50 }"
-             :scroll="{ y: 480 }"
-             :customRow="customRow"
-             rowKey="id"
-    >
-      <template slot="code" slot-scope="{statusCode}">
-        <span :class="[codeClassName(statusCode)]">{{statusCode}}</span>
-      </template>
-      <template slot="start" slot-scope="{startTime}">
-        <span>{{dateFormatter(startTime)}}</span>
-      </template>
-    </a-table>
+    <div className="ant-table ant-table-small ant-table-scroll-position-left">
+      <div className="ant-table-content">
+        <table className="ant-table-body">
+
+          <thead className="ant-table-thead">
+          <tr>
+            <th :style="{'width':'70px', 'minWidth': '70px' }">Method</th>
+            <th :style="{'width':'100px', 'minWidth': '100px' }">Code</th>
+            <th :style="{'width':'70px', 'minWidth': '70px' }">Host</th>
+            <th :style="{'width':'200px', 'minWidth': '200px' }">Path</th>
+            <th :style="{'width':'auto', 'minWidth': '600px' }">Mime</th>
+            <th :style="{'width':'100px', 'minWidth': '100px' }">Start</th>
+          </tr>
+          </thead>
+
+          <tbody className="ant-table-tbody">
+
+          </tbody>
+        </table>
+        <virtual-scroller
+          class="full-width"
+          style="height: 480px"
+          :items="list"
+          :item-height="30"
+        >
+          <tr slot-scope="{item}" @click="rowClick(item)">
+            <td>{{item.method}}</td>
+            <td :class="[codeClassName(item.statusCode)]">{{item.statusCode}}</td>
+            <td>{{item.host}}</td>
+            <td>{{item.path}}</td>
+            <td>{{item.mime}}</td>
+            <td>{{dateFormatter(item.startTime)}}</td>
+          </tr>
+        </virtual-scroller>
+      </div>
+    </div>
     <network-detail v-model="showDetail"
                     :detailContent="detailContent"
                     :headers="headers"
@@ -87,16 +109,7 @@
         detailContent: {},
         showDetail: false,
         columns,
-        list: [],
-        customRow: (record) => {
-          return {
-            on: { // 事件
-              click: () => {
-                this.rowClick(record)
-              } // 点击行
-            }
-          }
-        }
+        list: []
       }
     },
     created () {
