@@ -1,7 +1,7 @@
 'use strict'
 
 import { app, BrowserWindow } from 'electron'
-import { mainParams } from './const'
+import { mainParams, clearCache } from './const'
 import localProxy from '../renderer/lib/global-proxy/local-proxy.js'
 /**
  * Set `__static` path to static files in production
@@ -36,6 +36,7 @@ app.on('ready', () => {
 
 app.on('window-all-closed', () => {
   localProxy.disable()
+  clearCache()
   if (process.platform !== 'darwin') {
     app.quit()
   }

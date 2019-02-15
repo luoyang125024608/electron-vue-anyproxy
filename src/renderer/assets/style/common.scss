@@ -359,6 +359,26 @@ div {
   box-sizing: border-box;
 }
 
+.border {
+  border: solid 1px #dfdfdf;
+}
+
+.border-top {
+  border-top: 1px solid #dfdfdf;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #dfdfdf;
+}
+
+.border-left {
+  border-left: 1px solid #dfdfdf;
+}
+
+.border-right {
+  border-right: 1px solid #dfdfdf;
+}
+
 .margin {
   margin: 10px;
 }
@@ -598,4 +618,24 @@ div {
 
 .pink-bg {
   background-color: #fb5c9b;
+}
+
+.lines-1 { /* autoprefixer: off */
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+}
+
+.lines-2 { /* autoprefixer: off */
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  display: block;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+  height: 3em;
 }

@@ -10,8 +10,19 @@
       <a-switch
         checkedChildren="开"
         unCheckedChildren="关"
-        @click="globalChange"
+        @change="globalChange"
         v-model="global"
+      >
+      </a-switch>
+    </a-form-item>
+    <a-form-item v-bind="formItemLayout"
+                 label="自动滚屏"
+    >
+      <a-switch
+        checkedChildren="开"
+        unCheckedChildren="关"
+        @change="autoSrollChange"
+        :checked="autoScroll"
       >
       </a-switch>
     </a-form-item>
@@ -21,6 +32,7 @@
 <script>
   import { Form, Switch } from 'ant-design-vue'
   import localProxy from '../lib/global-proxy/local-proxy.js'
+  import { mapState } from 'vuex'
 
   export default {
     components: {
@@ -45,8 +57,15 @@
         } else {
           localProxy.disable()
         }
+      },
+      autoSrollChange (bool) {
+        this.$store.dispatch('TOGGLE_AUTO_SCROLL', bool)
       }
     },
-    computed: {}
+    computed: {
+      ...mapState({
+        autoScroll: state => state.setting.autoScroll
+      })
+    }
   }
 </script>

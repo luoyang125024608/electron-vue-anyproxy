@@ -54,7 +54,7 @@ class ProxyApi {
   fetchBody (id) {
     return new Promise((resolve, reject) => {
       this.proxyServer.recorder.getDecodedBody(id, (err, result) => {
-        if (err || !result || !result.content) {
+        if (err || !result) {
           reject(err || new Error())
         } else if (result.type && result.type === 'image' && result.mime) {
           resolve({

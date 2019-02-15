@@ -1,31 +1,49 @@
-<style scoped lang="less">
-  @import "../assets/style/network.less";
+<style scoped lang="scss">
+  .host {
+    width: 170px;
+  }
+
+  .path {
+    flex: 1;
+
+  }
+
+  .mime {
+    width: 130px;
+  }
 </style>
 
 <template>
   <div>
-    <div className="ant-table ant-table-small ant-table-scroll-position-left">
-      <div className="ant-table-content">
-        <section className="ant-table-body">
-          <div className="ant-table-thead">
-            <span :style="{'width':'70px', 'minWidth': '70px' }">Host</span>
-            <span :style="{'width':'200px', 'minWidth': '200px' }">Path</span>
-            <span :style="{'width':'auto', 'minWidth': '600px' }">Mime</span>
-          </div>
-          <virtual-scroller
-            className="ant-table-tbody"
-            style="height: 480px"
-            :items="list"
-            :item-height="30"
-          >
-            <p slot-scope="{item}" @click="rowClick(item)">
-              <span>{{item.host}}</span>
-              <span>{{item.path}}</span>
-              <span>{{item.mime}}</span>
-            </p>
-          </virtual-scroller>
-        </section>
-      </div>
+    <div class="flex flex-justify-between margin-bottom">
+      <span class="host inline-block lines-1 padding-left">Host</span>
+      <span class="path inline-block lines-1 margin-left padding-left">Path</span>
+      <span class="mime inline-block lines-1">Mime</span>
+    </div>
+    <a-list
+      @mouseenter="enableAuto=false"
+      @mouseleave="enableAuto=true"
+      class="border padding margin-bottom"
+    >
+      <virtual-scroller
+        style="height: 520px"
+        :items="filterList"
+        :item-height="42"
+        ref="scroller"
+      >
+        <a-list-item slot-scope="{item}" @click="rowClick(item)" style="padding: 0">
+          <p class="margin-top border-bottom padding-bottom flex flex-justify-between pointer full-width">
+            <span class="host inline-block lines-1">{{item.host}}</span>
+            <span class="path inline-block lines-1 margin-left">{{item.path}}</span>
+            <span class="mime inline-block lines-1 margin-left padding-left">{{item.mime}}</span>
+          </p>
+        </a-list-item>
+      </virtual-scroller>
+    </a-list>
+    <div class="flex padding-top">
+      <a-input placeholder="Host" v-model="filterKey.host"></a-input>
+      <a-input placeholder="Path" v-model="filterKey.path" class="margin-left"></a-input>
+      <a-input placeholder="Mime" v-model="filterKey.mime" class="margin-left"></a-input>
     </div>
     <network-detail v-model="showDetail"
                     :detailContent="detailContent"
@@ -39,11 +57,16 @@
   import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
   import proxyApi from '@/lib/proxy/proxy-api'
   import networkDetail from './components/network-detail.vue'
+  import { List, Input } from 'ant-design-vue'
+  import { mapState } from 'vuex'
 
   export default {
     components: {
       'virtual-scroller': RecycleScroller,
-      networkDetail
+      networkDetail,
+      [Input.name]: Input,
+      [List.name]: List,
+      [List.Item.name]: List.Item
     },
     name: 'network',
     data () {
@@ -54,13 +77,24 @@
         },
         detailContent: {},
         showDetail: false,
-        list: []
+        list: [],
+        enableAuto: true,
+        filterKey: {
+          host: '',
+          path: '',
+          mime: ''
+        }
       }
     },
     created () {
       this.$bus.$on('updateList', (item) => {
         if (item.method !== 'CONNECT' && item.statusCode) {
           this.list.push(item)
+          if (this.autoScroll && this.enableAuto) {
+            this.$nextTick(() => {
+              this.$refs.scroller.scrollToItem(this.list.length - 1)
+            })
+          }
         }
       })
     },
@@ -70,9 +104,29 @@
           this.headers = res[0]
           this.detailContent = res[1]
           this.showDetail = true
-        }, () => {})
+        }, () => { this.$error({ title: '错误', content: '没有该请求日志' }) })
       }
     },
-    computed: {}
+    computed: {
+      ...mapState({
+        autoScroll: state => state.setting.autoScroll
+      }),
+      filterList () {
+        let { host, path, mime } = this.filterKey
+        if (!(host || path || mime)) {
+          return this.list
+        } else {
+          return this.list.filter((item) => {
+            for (let key in this.filterKey) {
+              let keyword = this.filterKey[key]
+              if (keyword && item[key].indexOf(keyword) + 1) {
+                return true
+              }
+            }
+            return false
+          })
+        }
+      }
+    }
   }
 </script>

@@ -38,7 +38,10 @@
       <a-tab-pane tab="Response" key="Response" forceRender>
         <a-collapse :activeKey="['1','2','3']" :bordered="false">
           <a-collapse-panel header="General" key="1">
-            <div><b>Status Code: </b>{{headers.statusCode}}</div>
+            <div>
+              <b>Status Code: </b>
+              <span :class="[codeClassName(headers.statusCode)]">{{headers.statusCode}}</span>
+            </div>
           </a-collapse-panel>
           <a-collapse-panel header="Header" key="2">
             <div v-for="(value, key) in headers.resHeader">
@@ -120,6 +123,14 @@
     methods: {
       onClose () {
         this.$emit('input', false)
+      },
+      codeClassName (statusCode) {
+        if (parseInt(statusCode) >= 400) {
+          return 'red'
+        } else if (parseInt(statusCode) === 200) {
+          return 'green'
+        }
+        return 'orange'
       }
     },
     computed: {
