@@ -4,7 +4,7 @@
 <template>
   <div>
     <router-link to="/rule/add">
-      <a-button icon="plus">添加规则</a-button>
+      <a-button icon="plus" type="primary">添加规则</a-button>
     </router-link>
     <a-table :columns="columns"
              :dataSource="rulesData"
@@ -14,12 +14,12 @@
       <template slot="title" slot-scope="{name,enable}">
         <span :class="{'green':enable,'grey-9':!enable}">{{name}}</span>
       </template>
-      <template slot="operation" slot-scope="{id,enable}">
-        <a-button @click="edit(id)">编辑</a-button>
-        <a-button type="danger" @click="del(id)">删除</a-button>
+      <template slot="operation" slot-scope="{name,id,enable}">
         <a-button @click="use(id)">
           <span :class="{'green':!enable,'red':enable}">{{enable?'停用':'启用'}}</span>
         </a-button>
+        <a-button @click="edit(id)">编辑</a-button>
+        <a-button type="danger" @click="del(name,id)">删除</a-button>
       </template>
     </a-table>
   </div>
@@ -58,10 +58,10 @@
       edit (id) {
         this.$router.push('/rule/edit/' + id)
       },
-      del (id) {
+      del (name, id) {
         this.$confirm({
           title: '提示',
-          content: `确定要删除吗？`,
+          content: `确定要删除[${name}]吗？`,
           onOk: async () => {
             this.$store.dispatch('DELETE_RULE', id)
           }
