@@ -40,10 +40,13 @@
         </a-list-item>
       </virtual-scroller>
     </a-list>
-    <div class="flex padding-top">
-      <a-input placeholder="Host" v-model="filterKey.host"></a-input>
-      <a-input placeholder="Path" v-model="filterKey.path" class="margin-left"></a-input>
-      <a-input placeholder="Mime" v-model="filterKey.mime" class="margin-left"></a-input>
+    <div class="flex padding-top flex-align-center">
+      <div style="width: 50px">过滤：</div>
+      <div class="flex" style="flex:1">
+        <a-input placeholder="Host" v-model="filterKey.host"></a-input>
+        <a-input placeholder="Path" v-model="filterKey.path" class="margin-left"></a-input>
+        <a-input placeholder="Mime" v-model="filterKey.mime" class="margin-left"></a-input>
+      </div>
     </div>
     <network-detail v-model="showDetail"
                     :detailContent="detailContent"
@@ -96,6 +99,9 @@
             })
           }
         }
+      })
+      this.$bus.$on('clearList', () => {
+        this.list = []
       })
     },
     methods: {

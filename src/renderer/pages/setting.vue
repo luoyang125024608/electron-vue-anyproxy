@@ -5,7 +5,7 @@
 <template>
   <a-form>
     <a-form-item v-bind="formItemLayout"
-                 label="本机全局启用"
+                 label="本机全局代理"
     >
       <a-switch
         checkedChildren="开"
@@ -14,6 +14,7 @@
         v-model="global"
       >
       </a-switch>
+      <span class="margin-left font-12 grey-9">可能与翻墙软件冲突</span>
     </a-form-item>
     <a-form-item v-bind="formItemLayout"
                  label="自动滚屏"
@@ -25,6 +26,7 @@
         :checked="autoScroll"
       >
       </a-switch>
+      <span class="margin-left font-12 grey-9">抓包列表自动滚到底部</span>
     </a-form-item>
   </a-form>
 </template>

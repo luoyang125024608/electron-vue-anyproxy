@@ -4,7 +4,10 @@
       collapsible
       v-model="collapsed"
     >
-      <div class="logo"></div>
+      <div class="logo overflow-hide">
+        <span class="white bold" v-if="collapsed">E V A</span>
+        <span class="white bold" v-else>Electron Vue Anyproxy</span>
+      </div>
       <a-menu theme="dark" :defaultSelectedKeys="['1']" mode="inline">
         <a-menu-item key="1">
           <router-link to="/">
@@ -64,8 +67,8 @@
 
 <style lang="scss">
   .components-layout-demo-side .logo {
-    height: 32px;
-    background: rgba(255, 255, 255, .2);
-    margin: 16px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
   }
 </style>

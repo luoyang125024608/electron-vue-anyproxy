@@ -13,7 +13,7 @@
 
   export default {
     components: { layout, headerMenu },
-    name: 'http-toolkit'
+    name: 'electron-vue-anyproxy'
   }
 </script>
 

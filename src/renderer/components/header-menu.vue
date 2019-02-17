@@ -10,16 +10,45 @@
   <div>
     <div class="flex flex-align-center full-height flex-justify-between">
       <div>
-        <a-button v-if="proxyStatus==='off'" shape="circle" type="primary" icon="play-circle"
+        <a-button v-if="proxyStatus==='off'"
+                  shape="circle"
+                  type="primary"
+                  icon="play-circle"
                   @click="proxyStart()"
         >
         </a-button>
-        <a-button v-if="proxyStatus==='on'" shape="circle" @click="proxyClose()"
-                  type="danger" icon="poweroff"
+        <a-button v-if="proxyStatus==='on'"
+                  shape="circle"
+                  @click="proxyClose()"
+                  type="danger"
+                  icon="poweroff"
+        >
+        </a-button>
+        <a-button shape="circle"
+                  @click="$bus.$emit('clearList')"
+                  type="danger"
+                  icon="delete"
+                  class="margin-left"
         >
         </a-button>
       </div>
       <div>
+        <a-popover
+          trigger="click"
+        >
+          <template slot="content">
+            <div v-if="proxyStatus==='off'">
+              服务未启动
+            </div>
+            <div v-if="proxyStatus==='on'">
+              <p>服务已启动</p>
+              <p>代理地址：{{ipAddress}}</p>
+              <p>代理端口：{{port}}</p>
+              <!--<p v-if="rootCAExists">证书路径：{{rootCADirPath}}</p>-->
+            </div>
+          </template>
+          <a-button icon="exclamation-circle">当前状态</a-button>
+        </a-popover>
         <a-button @click="onClickDownload" icon="download"
         >
           下载证书
@@ -42,7 +71,8 @@
           </a>
         </div>
         <div v-else>
-          <p class="margin-bottom">Your RootCA has not been generated yet, please click the button to generate before you download it.</p>
+          <p class="margin-bottom">Your RootCA has not been generated yet, please click the button to generate before
+            you download it.</p>
           <a-button icon="inbox" type="primary" @click="generateCA()">生成证书</a-button>
         </div>
       </div>
@@ -54,10 +84,11 @@
 <script>
   import proxyApi from '@/lib/proxy/proxy-api'
   import { mapState } from 'vuex'
-  import { Drawer } from 'ant-design-vue'
+  import { Drawer, Popover } from 'ant-design-vue'
 
   export default {
     components: {
+      [Popover.name]: Popover,
       [Drawer.name]: Drawer
     },
     name: 'header-menu',
@@ -68,7 +99,11 @@
         loadingCAQr: true,
         CAQrCodeImageDom: '',
         isRootCAFileExists: false,
-        url: ''
+        url: '',
+        rootCADirPath: '',
+        ipAddress: '',
+        port: '',
+        rootCAExists: false
       }
     },
     created () {
@@ -93,6 +128,21 @@
           })
         })
       },
+      getInitData () {
+        this.$axios.get('/api/getInitData').then((response) => {
+          let { rootCADirPath, ipAddress, rootCAExists } = response.data
+          this.rootCADirPath = rootCADirPath
+          this.ipAddress = ipAddress[1]
+          this.rootCAExists = rootCAExists
+          this.port = proxyApi.options.port
+        }).catch((error) => {
+          console.error(error)
+          this.$error({
+            title: '错误',
+            content: error.errorMsg || 'Failed to get the server status.'
+          })
+        })
+      },
       async proxyInit () {
         await this.$store.dispatch('INIT_PROXY_RULE')
         let ruleIds = this.rulesData.filter(rule => rule.enable).map(rule => rule.id)
@@ -106,6 +156,7 @@
           this.proxyStatus = 'on'
           console.log('启动完成')
           this.getQrCode()
+          this.getInitData()
         })
         proxyApi.start((item) => {
           this.$bus.$emit('updateList', item)
