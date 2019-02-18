@@ -8,6 +8,17 @@
         <span class="white bold" v-if="collapsed">E V A</span>
         <span class="white bold" v-else>Electron Vue Anyproxy</span>
       </div>
+      <div class="text-center mb-5">
+        <div class="circles" :class="[ serverRunStatus? 'active':'stop' ]">
+          <span class="circle1"></span>
+          <span class="circle2"></span>
+          <span class="circle3"></span>
+          <span class="circle4"></span>
+          <span class="circle5"></span>
+          <span class="circle6"></span>
+          <span class="circle7"></span>
+        </div>
+      </div>
       <a-menu theme="dark" :defaultSelectedKeys="['1']" mode="inline">
         <a-menu-item key="1">
           <router-link to="/">
@@ -59,8 +70,14 @@
     },
     data () {
       return {
+        serverRunStatus: false,
         collapsed: false
       }
+    },
+    created () {
+      this.$bus.$on('serverRunStatus', (bool) => {
+        this.serverRunStatus = bool
+      })
     }
   }
 </script>
@@ -70,5 +87,84 @@
     height: 40px;
     line-height: 40px;
     text-align: center;
+  }
+</style>
+<style lang="less">
+  @keyframes lightBulb {
+    from {
+      opacity: 1
+    }
+    to {
+      opacity: 0.1
+    }
+  }
+
+  @total-duration: 5s;
+  @single-duration: 0.7s;
+  .circles {
+    display: inline-block;
+
+    span {
+      display: block;
+      float: left;
+      width: 3px;
+      height: 3px;
+      background-color: #10A1FF;
+      margin: 0 4px;
+      border-radius: 50%;
+      opacity: 0.3;
+    }
+
+    &.stop {
+      .circle1, .circle7 {
+        opacity: 0.2;
+      }
+
+      .circle2, .circle6 {
+        opacity: 0.4;
+      }
+
+      .circle3, .circle5 {
+        opacity: 0.8;
+      }
+
+      .circle4 {
+        opacity: 1;
+      }
+    }
+
+    &.active {
+      span {
+        animation: lightBulb @total-duration infinite;
+      }
+
+      .circle7 {
+        animation-delay: (1*@single-duration);
+      }
+
+      .circle6 {
+        animation-delay: (2*@single-duration);
+      }
+
+      .circle5 {
+        animation-delay: (3*@single-duration);
+      }
+
+      .circle4 {
+        animation-delay: (4*@single-duration);
+      }
+
+      .circle3 {
+        animation-delay: (5*@single-duration);
+      }
+
+      .circle2 {
+        animation-delay: (6*@single-duration);
+      }
+
+      .circle1 {
+        animation-delay: (7*@single-duration);
+      }
+    }
   }
 </style>

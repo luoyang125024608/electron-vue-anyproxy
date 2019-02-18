@@ -84,12 +84,18 @@ class RuleApi {
     }
   }
 
+  freshRequire (modulePath) {
+    let key = nodeRequire.resolve(modulePath)
+    delete nodeRequire.cache[key]
+    return nodeRequire(modulePath)
+  }
+
   // require rule文件
   requireRuleModule (id) {
     if (!id) return {}
     const filepath = path.resolve(this.ruleCustomPath, this.getCustomFileName(id))
     if (fs.existsSync(filepath)) {
-      return nodeRequire(filepath)
+      return this.freshRequire(filepath)
     } else {
       return {}
     }

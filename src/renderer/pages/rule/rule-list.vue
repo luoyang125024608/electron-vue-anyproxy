@@ -63,7 +63,8 @@
           title: '提示',
           content: `确定要删除[${name}]吗？`,
           onOk: async () => {
-            this.$store.dispatch('DELETE_RULE', id)
+            await this.$store.dispatch('DELETE_RULE', id)
+            this.$bus.$emit('proxyReload')
           }
         })
       },

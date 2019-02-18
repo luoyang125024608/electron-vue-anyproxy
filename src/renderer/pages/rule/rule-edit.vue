@@ -138,7 +138,8 @@
       },
       async saveToFile (id) {
         await this.$store.dispatch('SAVE_PROXY_RULE', { id, ruleValue: this.ruleValue })
-        return this.$store.dispatch('INIT_PROXY_RULE')
+        await this.$store.dispatch('INIT_PROXY_RULE')
+        this.$bus.$emit('proxyReload')
       }
     },
     created () {

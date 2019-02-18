@@ -51,10 +51,11 @@
           <a-collapse-panel header="Body" key="3">
             <a-tabs type="card">
               <a-tab-pane tab="Raw" key="1">
-                <div v-html="preview"></div>
+                <div>{{detailContent.content}}</div>
               </a-tab-pane>
-              <a-tab-pane tab="Preview" key="2" v-if="jsonPreview">
-                <json-viewer :value="jsonPreview"></json-viewer>
+              <a-tab-pane tab="Preview" key="2">
+                <json-viewer v-if="preview.type==='json'" :value="preview.content"></json-viewer>
+                <div v-else-if="preview.type!=='video'" v-html="preview.content"></div>
               </a-tab-pane>
             </a-tabs>
           </a-collapse-panel>
@@ -69,7 +70,16 @@
   import 'highlight.js/styles/github.css'
   import JsonViewer from 'vue-json-viewer'
   import { Drawer, Collapse, Tabs, Table } from 'ant-design-vue'
+
   // highlight code 缓存，避免二次渲染
+  function isJson (content) {
+    try {
+      return JSON.parse(content)
+    } catch (err) {
+      return false
+    }
+  }
+
   const highlightCache = {}
   const cookieColumns = [
     {
@@ -146,32 +156,27 @@
         }
         return []
       },
-      jsonPreview () {
-        let detail = this.detailContent
-        let type = detail.type || ''
-
-        if (type.match('json')) {
-          try {
-            return JSON.parse(detail.content)
-          } catch (err) {
-            return detail.content
-          }
-        } else {
-          return ''
-        }
-      },
       preview () {
         let detail = this.detailContent
         let type = detail.type || ''
         if (type.match(/css|javascript|html/)) {
-          return highlightCache[detail.id] ||
+          let content = highlightCache[detail.id] ||
             (highlightCache[detail.id] =
                 '<pre><code>' + hljs.highlightAuto(detail.content).value + '</code></pre>'
             )
+          return { type: 'code', content }
         } else if (type.match('image')) {
-          return '<img src="' + this.headers.url + '">'
+          let content = '<img src="' + this.headers.url + '">'
+          return { type: 'image', content }
+        } else if (type.match('video')) {
+          return { type: 'video' }
         } else {
-          return detail.content
+          let content = isJson(detail.content)
+          if (content) {
+            return { type: 'json', content }
+          } else {
+            return { type: '', content: detail.content }
+          }
         }
       }
     }

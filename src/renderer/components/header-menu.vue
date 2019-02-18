@@ -66,7 +66,7 @@
           <div v-html="CAQrCodeImageDom" class="qr-code"></div>
           <p>Scan to download rootCA.crt to your Phone</p>
           <p class="margin-bottom">{{url}}</p>
-          <a v-if="url" :href="url" target="_blank">
+          <a v-if="url" :href="url">
             <a-button icon="download" type="primary">Download</a-button>
           </a>
         </div>
@@ -154,6 +154,7 @@
         }
         proxyApi.proxyServer.once('ready', () => {
           this.proxyStatus = 'on'
+          this.$bus.$emit('serverRunStatus', true)
           console.log('启动完成')
           this.getQrCode()
           this.getInitData()
@@ -164,6 +165,7 @@
       },
       proxyClose () {
         this.proxyStatus = 'off'
+        this.$bus.$emit('serverRunStatus', false)
         proxyApi.close()
       },
       async proxyReload () {

@@ -20,7 +20,7 @@ class ProxyApi {
       // throttle: 10000,
       forceProxyHttps: false,
       wsIntercept: false, // 不开启websocket代理
-      silent: false
+      silent: true
     }
   }
 
@@ -30,7 +30,6 @@ class ProxyApi {
 
   init (ruleIds) {
     this.options.forceProxyHttps = this.CAFileExists
-    console.log(this.options.forceProxyHttps)
     if (ruleIds) {
       this.options.rule = ruleApi.mergeRuleModule(ruleIds)
     }

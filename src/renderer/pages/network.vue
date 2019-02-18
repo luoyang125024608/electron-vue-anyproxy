@@ -28,11 +28,11 @@
       <virtual-scroller
         style="height: 520px"
         :items="filterList"
-        :item-height="42"
+        :item-height="32"
         ref="scroller"
       >
         <a-list-item slot-scope="{item}" @click="rowClick(item)" style="padding: 0">
-          <p class="margin-top border-bottom padding-bottom flex flex-justify-between pointer full-width">
+          <p class="mt-5 border-bottom pb-5 flex flex-justify-between pointer full-width">
             <span class="host inline-block lines-1">{{item.host}}</span>
             <span class="path inline-block lines-1 margin-left">{{item.path}}</span>
             <span class="mime inline-block lines-1 margin-left padding-left">{{item.mime}}</span>
@@ -43,9 +43,9 @@
     <div class="flex padding-top flex-align-center">
       <div style="width: 50px">过滤：</div>
       <div class="flex" style="flex:1">
-        <a-input placeholder="Host" v-model="filterKey.host"></a-input>
-        <a-input placeholder="Path" v-model="filterKey.path" class="margin-left"></a-input>
-        <a-input placeholder="Mime" v-model="filterKey.mime" class="margin-left"></a-input>
+        <a-input placeholder="Host" v-model="filterKey.host" class="red"></a-input>
+        <a-input placeholder="Path" v-model="filterKey.path" class="margin-left red"></a-input>
+        <a-input placeholder="Mime" v-model="filterKey.mime" class="margin-left red"></a-input>
       </div>
     </div>
     <network-detail v-model="showDetail"
