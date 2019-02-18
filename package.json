@@ -1,6 +1,6 @@
 {
   "name": "electron-vue-anyproxy",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "luoyangyangyang007 <125024608@qq.com>",
   "description": "electron-vue-anyproxy",
   "license": "MIT",
@@ -20,7 +20,7 @@
   },
   "build": {
     "productName": "electron-vue-anyproxy",
-    "appId": "com.example.yourapp",
+    "appId": "com.luoyangyangyang.electron-vue-anyproxy",
     "directories": {
       "output": "build"
     },

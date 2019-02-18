@@ -4,18 +4,18 @@
 
 <template>
   <a-form>
-    <a-form-item v-bind="formItemLayout"
-                 label="本机全局代理"
-    >
-      <a-switch
-        checkedChildren="开"
-        unCheckedChildren="关"
-        @change="globalChange"
-        v-model="global"
-      >
-      </a-switch>
-      <span class="margin-left font-12 grey-9">可能与翻墙软件冲突</span>
-    </a-form-item>
+    <!--<a-form-item v-bind="formItemLayout"-->
+                 <!--label="本机全局代理"-->
+    <!--&gt;-->
+      <!--<a-switch-->
+        <!--checkedChildren="开"-->
+        <!--unCheckedChildren="关"-->
+        <!--@change="globalChange"-->
+        <!--v-model="global"-->
+      <!--&gt;-->
+      <!--</a-switch>-->
+      <!--<span class="margin-left font-12 grey-9">可能与翻墙软件冲突</span>-->
+    <!--</a-form-item>-->
     <a-form-item v-bind="formItemLayout"
                  label="自动滚屏"
     >

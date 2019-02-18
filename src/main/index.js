@@ -1,8 +1,8 @@
 'use strict'
 
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, Menu } from 'electron'
 import { mainParams, clearCache } from './const'
-import localProxy from '../renderer/lib/global-proxy/local-proxy.js'
+// import localProxy from '../renderer/lib/global-proxy/local-proxy.js'
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -16,6 +16,26 @@ const winURL = process.env.NODE_ENV === 'development'
   : `file://${__dirname}/index.html`
 
 function createWindow () {
+  if (process.platform === 'darwin') {
+    const template = [
+      {
+        label: 'Application',
+        submenu: [
+          { label: 'Quit', accelerator: 'Command+Q', click: function () { app.quit() } }
+        ]
+      },
+      {
+        label: 'Edit',
+        submenu: [
+          { label: 'Copy', accelerator: 'CmdOrCtrl+C', selector: 'copy:' },
+          { label: 'Paste', accelerator: 'CmdOrCtrl+V', selector: 'paste:' }
+        ]
+      }
+    ]
+    Menu.setApplicationMenu(Menu.buildFromTemplate(template))
+  } else {
+    Menu.setApplicationMenu(null)
+  }
   /**
    * Initial window options
    */
@@ -35,7 +55,7 @@ app.on('ready', () => {
 })
 
 app.on('window-all-closed', () => {
-  localProxy.disable()
+  // localProxy.disable()
   clearCache()
   if (process.platform !== 'darwin') {
     app.quit()

@@ -31,7 +31,7 @@ class ProxyApi {
   init (ruleIds) {
     this.options.forceProxyHttps = this.CAFileExists
     console.log(this.options.forceProxyHttps)
-    if (ruleIds && ruleIds.length) {
+    if (ruleIds) {
       this.options.rule = ruleApi.mergeRuleModule(ruleIds)
     }
     this.proxyServer = new AnyProxy.ProxyServer(this.options)
