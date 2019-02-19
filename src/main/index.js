@@ -28,6 +28,7 @@ function createWindow () {
         label: 'Edit',
         submenu: [
           { label: 'Copy', accelerator: 'CmdOrCtrl+C', selector: 'copy:' },
+          { label: 'Cut', accelerator: 'CmdOrCtrl+X', selector: 'Cut:' },
           { label: 'Paste', accelerator: 'CmdOrCtrl+V', selector: 'paste:' }
         ]
       }

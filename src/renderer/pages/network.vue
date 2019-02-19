@@ -21,24 +21,19 @@
       <span class="mime inline-block lines-1">Mime</span>
     </div>
     <a-list
+      style="height: 520px;overflow-y: scroll"
+      :dataSource="filterList"
       @mouseenter="enableAuto=false"
       @mouseleave="enableAuto=true"
       class="border padding margin-bottom"
     >
-      <virtual-scroller
-        style="height: 520px"
-        :items="filterList"
-        :item-height="32"
-        ref="scroller"
-      >
-        <a-list-item slot-scope="{item}" @click="rowClick(item)" style="padding: 0">
-          <p class="mt-5 border-bottom pb-5 flex flex-justify-between pointer full-width">
-            <span class="host inline-block lines-1">{{item.host}}</span>
-            <span class="path inline-block lines-1 margin-left">{{item.path}}</span>
-            <span class="mime inline-block lines-1 margin-left padding-left">{{item.mime}}</span>
-          </p>
-        </a-list-item>
-      </virtual-scroller>
+      <a-list-item slot="renderItem" slot-scope="item, index" @click="rowClick(item)" style="padding: 0">
+        <p class="mt-5 pb-5 flex flex-justify-between pointer full-width">
+          <span class="host inline-block lines-1">{{item.host}}</span>
+          <span class="path inline-block lines-1 margin-left">{{item.path}}</span>
+          <span class="mime inline-block lines-1 margin-left padding-left">{{item.mime}}</span>
+        </p>
+      </a-list-item>
     </a-list>
     <div class="flex padding-top flex-align-center">
       <div style="width: 50px">过滤：</div>
@@ -56,8 +51,6 @@
 </template>
 
 <script>
-  import { RecycleScroller } from 'vue-virtual-scroller'
-  import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
   import proxyApi from '@/lib/proxy/proxy-api'
   import networkDetail from './components/network-detail.vue'
   import { List, Input } from 'ant-design-vue'
@@ -65,7 +58,6 @@
 
   export default {
     components: {
-      'virtual-scroller': RecycleScroller,
       networkDetail,
       [Input.name]: Input,
       [List.name]: List,
@@ -93,11 +85,6 @@
       this.$bus.$on('updateList', (item) => {
         if (item.method !== 'CONNECT' && item.statusCode) {
           this.list.push(item)
-          if (this.autoScroll && this.enableAuto) {
-            this.$nextTick(() => {
-              this.$refs.scroller.scrollToItem(this.list.length - 1)
-            })
-          }
         }
       })
       this.$bus.$on('clearList', () => {

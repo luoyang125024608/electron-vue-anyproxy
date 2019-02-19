@@ -49,9 +49,15 @@
           </template>
           <a-button icon="exclamation-circle">当前状态</a-button>
         </a-popover>
-        <a-button @click="onClickDownload" icon="download"
+        <a-button @click="onClickDownload"
+                  icon="download"
         >
           下载证书
+        </a-button>
+        <a-button @click="openDevTools()"
+                  icon="chrome"
+        >
+          控制台
         </a-button>
       </div>
     </div>
@@ -85,6 +91,7 @@
   import proxyApi from '@/lib/proxy/proxy-api'
   import { mapState } from 'vuex'
   import { Drawer, Popover } from 'ant-design-vue'
+  const { getCurrentWindow } = require('electron').remote
 
   export default {
     components: {
@@ -113,6 +120,9 @@
       })
     },
     methods: {
+      openDevTools () {
+        getCurrentWindow().toggleDevTools()
+      },
       getQrCode () {
         this.$axios.get('/api/getQrCode').then((response) => {
           let { qrImgDom, isRootCAFileExists, url } = response.data

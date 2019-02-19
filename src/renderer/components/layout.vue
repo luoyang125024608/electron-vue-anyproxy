@@ -32,12 +32,12 @@
             <span>拦截修改</span>
           </router-link>
         </a-menu-item>
-        <a-menu-item key="9">
-          <router-link to="/setting">
-            <a-icon type="setting"></a-icon>
-            <span>设置</span>
-          </router-link>
-        </a-menu-item>
+        <!--<a-menu-item key="3">-->
+          <!--<router-link to="/setting">-->
+            <!--<a-icon type="setting"></a-icon>-->
+            <!--<span>设置</span>-->
+          <!--</router-link>-->
+        <!--</a-menu-item>-->
       </a-menu>
     </a-layout-sider>
     <a-layout>
