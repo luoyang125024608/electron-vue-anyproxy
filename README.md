@@ -2,24 +2,39 @@
 
 > electron-vue-anyproxy
 
-#### Build Setup
+![roadmap.path](https://github.com/luoyang125024608/electron-vue-anyproxy/blob/master/src/renderer/assets/p1.jpg)
 
+![roadmap.path](https://github.com/luoyang125024608/electron-vue-anyproxy/blob/master/src/renderer/assets/p2.jpg)
+
+这个项目用 [electron-vue](https://github.com/SimulatedGREG/electron-vue)@[8fae476](https://github.com/SimulatedGREG/electron-vue/tree/8fae4763e9d225d3691b627e83b9e09b56f6c935) 和 [vue-cli](https://github.com/vuejs/vue-cli)生成. 文档 [Document](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
+
+这个项目核心逻辑使用阿里巴巴 [anyproxy](https://github.com/alibaba/anyproxy)@4.0. 文档 [Document](http://anyproxy.io/cn/).
+
+这个项目参考了[electron-anyproxy](https://github.com/fwon/electron-anyproxy) 这个项目
+
+```
+特点：1、支持同时启用多个规则
+
+     2、规则可以在打开控制台断点
+     
+     3、模块引入anyproxy，无修改源码，支持升级
+```
+#### Build Setup
+    
 ``` bash
-# install dependencies
+# 安装依赖
 npm install
 
-# serve with hot reload at localhost:9080
+# 开发
 npm run dev
 
-# build electron application for production
+# 打包编译生成
 npm run build
 
 
-# lint all JS/Vue component files in `src/`
+# 语法检查
 npm run lint
 
 ```
 
 ---
-
-This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue)@[8fae476](https://github.com/SimulatedGREG/electron-vue/tree/8fae4763e9d225d3691b627e83b9e09b56f6c935) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
