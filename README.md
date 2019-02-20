@@ -2,6 +2,8 @@
 
 > electron-vue-anyproxy
 
+下载mac或windows [体验版](https://github.com/luoyang125024608/electron-vue-anyproxy/releases/tag/v1.0.3)
+
 ![roadmap.path](https://github.com/luoyang125024608/electron-vue-anyproxy/blob/master/src/renderer/assets/p1.jpg)
 
 ![roadmap.path](https://github.com/luoyang125024608/electron-vue-anyproxy/blob/master/src/renderer/assets/p2.jpg)
