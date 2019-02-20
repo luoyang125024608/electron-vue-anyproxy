@@ -6,6 +6,8 @@
 
 ![roadmap.path](https://github.com/luoyang125024608/electron-vue-anyproxy/blob/master/src/renderer/assets/p2.jpg)
 
+![roadmap.path](https://github.com/luoyang125024608/electron-vue-anyproxy/blob/master/src/renderer/assets/p3.jpg)
+
 这个项目用 [electron-vue](https://github.com/SimulatedGREG/electron-vue)@[8fae476](https://github.com/SimulatedGREG/electron-vue/tree/8fae4763e9d225d3691b627e83b9e09b56f6c935) 和 [vue-cli](https://github.com/vuejs/vue-cli)生成. 文档 [Document](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
 
 这个项目核心逻辑使用阿里巴巴 [anyproxy](https://github.com/alibaba/anyproxy)@4.0. 文档 [Document](http://anyproxy.io/cn/).
