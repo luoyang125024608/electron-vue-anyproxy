@@ -15,8 +15,6 @@
 
 这个项目核心逻辑使用阿里巴巴 [anyproxy](https://github.com/alibaba/anyproxy)@4.0. 文档 [Document](http://anyproxy.io/cn/).
 
-这个项目参考了[electron-anyproxy](https://github.com/fwon/electron-anyproxy) 这个项目
-
 ```
 特点：1、支持同时启用多个规则
 
