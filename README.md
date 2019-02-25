@@ -16,9 +16,9 @@
 这个项目核心逻辑使用阿里巴巴 [anyproxy](https://github.com/alibaba/anyproxy)@4.0. 文档 [Document](http://anyproxy.io/cn/).
 
 ```
-特点：1、支持同时启用多个规则
+特点：1、支持同时启用多个抓包规则
 
-     2、规则可以在打开控制台断点
+     2、可以打开控制台断点抓包规则
      
      3、模块引入anyproxy，无修改源码，支持升级
 ```
