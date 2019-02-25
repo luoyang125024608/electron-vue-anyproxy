@@ -4,7 +4,7 @@
 
 下载mac或windows [体验版](https://github.com/luoyang125024608/electron-vue-anyproxy/releases/tag/v1.0.3)
 
-与charles等工具的区别在于，用js编写规则，然后Node跑规则，可以调起chrome开发者工具debugger或者console编写的规则。
+与charles等工具的区别在于，用js编写抓包规则，然后Node跑抓包规则，可以调起chrome开发者工具debugger或者console编写在node里的规则。
 ![roadmap.path](https://github.com/luoyang125024608/electron-vue-anyproxy/blob/master/src/renderer/assets/p1.jpg)
 
 ![roadmap.path](https://github.com/luoyang125024608/electron-vue-anyproxy/blob/master/src/renderer/assets/p2.jpg)
